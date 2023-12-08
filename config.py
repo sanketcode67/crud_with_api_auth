@@ -1,0 +1,5 @@
+class Config:
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///studentDB.db'
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    JWT_SECRET_KEY = '615afadef4441b604bc115f9ac90842bc4049e477cfbe860145afcf66dd06cf8'
+
