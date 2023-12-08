@@ -51,11 +51,23 @@ def get_student_by_id(student_id):
 @students_blueprint.route('/students', methods=['POST'])
 def add_student():
     data = request.json
-    new_student = Student(name=data['name'], age=data['age'])
+
+    # Validate age is a valid integer
+    try:
+        age = int(data['age'])
+    except ValueError:
+        return jsonify({"error": "Invalid 'age' value. It must be a valid integer."}), 400
+
+    # Check if age is within the specified range
+    if not (5 <= age <= 100):
+        return jsonify({"error": "Invalid 'age' value. It must be between 5 and 100."}), 400
+
+    new_student = Student(name=data['name'], age=age)
+
     db.session.add(new_student)
     db.session.commit()
-    return jsonify(new_student.serialize()), 201
 
+    return jsonify({"message":"student added successfully","student":new_student.serialize()}), 201
 
 
 # api to delete a student by student_id
